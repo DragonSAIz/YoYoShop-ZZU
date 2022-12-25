@@ -4,6 +4,7 @@ import com.yoyo.entity.Users;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 public interface UserDao {
 
@@ -18,4 +19,7 @@ public interface UserDao {
 
     @Select("SELECT * FROM users WHERE username=#{userName} AND phone=#{Phone}")
     public Users check(@Param("userName") String userName, @Param("Phone") String Phone);
+
+    @Update("UPDATE users SET PASSWORD=#{passWord} WHERE username=#{userName} AND phone=#{Phone}")
+    public void updatePasswordByUserNameAndPhone(@Param("passWord") String passWord,@Param("userName") String userName,@Param("Phone") String Phone);
 }

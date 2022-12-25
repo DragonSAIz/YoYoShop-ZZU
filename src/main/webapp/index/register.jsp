@@ -37,8 +37,8 @@
 							<input type="text" name="name" placeholder="请输入收货人" style="width: 350px;height: 32px">
 						</div>
 						<div class="input" style="margin-left: 160px">
-							<span>收货电话<label></label></span>
-							<input type="text" name="phone" placeholder="请输入收货电话" style="width: 350px;height: 32px">
+							<span>收货电话 <label style="color:red;">*</label></span>
+							<input type="text" name="phone" placeholder="请输入收货电话" required="required" style="width: 350px;height: 32px">
 						</div>
 						<div class="input" style="margin-left: 160px">
 							<span>收货地址<label></label></span>

@@ -32,4 +32,12 @@ public interface IUserService {
      * @return
      */
     public Users check(String userName, String Phone);
+
+    /**
+     * 根据用户名和手机号重置密码
+     * @param passWord
+     * @param userName
+     * @param Phone
+     */
+    public void updatePasswordByUserNameAndPhone(String passWord, String userName, String Phone);
 }

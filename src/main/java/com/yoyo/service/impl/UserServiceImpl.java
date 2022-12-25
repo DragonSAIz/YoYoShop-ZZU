@@ -38,4 +38,12 @@ public class UserServiceImpl implements IUserService {
         //调用dao
         return userDao.check(userName, Phone);
     }
+
+    @Override public void updatePasswordByUserNameAndPhone(String passWord, String userName, String Phone) {
+        //对密码进行加密
+        String encode = SafeUtil.encode(passWord);
+        //调用dao
+        userDao.updatePasswordByUserNameAndPhone(encode, userName, Phone);
+    }
+
 }

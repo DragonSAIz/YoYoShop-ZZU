@@ -34,15 +34,20 @@ public class UserController {
             return "/index/register"; //表示: /index/register.jsp
         }
         //如果flag不是-1,说明是注册页面的提交按钮被点击,进行注册用户操作
-        //判断页面输入的用户名和密码是否为空,如果为空,不能注册
+        //判断页面输入的用户名、密码和手机号是否为空,如果为空,不能注册
         if (users.getUsername() == null || users.getUsername().trim().isEmpty()) {
             //返回给页面错误提示信息
-            request.setAttribute("msg","用户名不能为空");
+            request.setAttribute("msg", "用户名不能为空");
             return "/index/register";
         }
         if (users.getPassword() == null || users.getPassword().trim().isEmpty()) {
             //返回给页面错误提示信息
-            request.setAttribute("msg","密码不能为空");
+            request.setAttribute("msg", "密码不能为空");
+            return "/index/register";
+        }
+        if (users.getPhone() == null || users.getPhone().trim().isEmpty() || !Pattern.matches("^1[3-9]\\d{9}$",users.getPhone())) {
+            //返回给页面错误提示信息
+            request.setAttribute("msg", "手机号不合法");
             return "/index/register";
         }
         //判断要注册的用户是否在数据库中已经有同名用户
@@ -134,12 +139,16 @@ public class UserController {
         //重置密码
         Users user = iUserService.check(users.getUsername().trim(), users.getPhone().trim());
         if (user != null) {
-            //查询到用户信息,表示重置成功
-            //跳转到登录界面
-            return "redirect:login?flag=-1";
+            //查询到用户信息,重置密码为123456
+            //更新数据库中对应用户密码
+            iUserService.updatePasswordByUserNameAndPhone("123456", user.getUsername().trim(), user.getPhone().trim());
+            request.setAttribute("msg", "密码已重置为123456");
+            //重置密码成功后,跳转到登录界面
+            request.setAttribute("flag", 6);
+            return "/index/login";
         }else {
             //未查询到用户信息,返回错误提示信息给页面
-            request.setAttribute("msg", "用户名或手机号错误");
+            request.setAttribute("msg", "用户名不存在或手机号错误");
             //跳转回重置界面
             return "/index/forget";
         }
