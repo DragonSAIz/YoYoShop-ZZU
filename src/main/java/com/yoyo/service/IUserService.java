@@ -40,4 +40,27 @@ public interface IUserService {
      * @param Phone
      */
     public void updatePasswordByUserNameAndPhone(String passWord, String userName, String Phone);
+
+    /**
+     * 根据用户id查询用户信息
+     * @param id
+     * @return
+     */
+    public Users get(int id);
+
+    /**
+     * 根据用户id修改姓名,电话和地址
+     * @param id
+     * @param name
+     * @param phone
+     * @param address
+     */
+    public void updateUserByid(int id, String name, String phone, String address);
+
+    /**
+     * 根据用户id修改用户密码
+     * @param id
+     * @param newPassWord
+     */
+    public void updatePassWordById(int id, String newPassWord);
 }

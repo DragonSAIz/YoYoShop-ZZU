@@ -46,4 +46,20 @@ public class UserServiceImpl implements IUserService {
         userDao.updatePasswordByUserNameAndPhone(encode, userName, Phone);
     }
 
+    @Override public Users get(int id) {
+        //调用dao
+        return userDao.get(id);
+    }
+
+    @Override public void updateUserByid(int id, String name, String phone, String address) {
+        //调用dao
+        userDao.updateUserByid(id, name, phone, address);
+    }
+
+    @Override public void updatePassWordById(int id, String newPassWord) {
+        String encode = SafeUtil.encode(newPassWord);
+        //调用dao
+        userDao.updatePassWordById(id, encode);
+    }
+
 }

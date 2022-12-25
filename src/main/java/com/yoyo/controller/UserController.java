@@ -1,8 +1,10 @@
 package com.yoyo.controller;
 
+import com.mysql.cj.Session;
 import com.yoyo.entity.Users;
 import com.yoyo.service.ITypeService;
 import com.yoyo.service.IUserService;
+import com.yoyo.util.SafeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 @Controller
@@ -151,6 +154,67 @@ public class UserController {
             request.setAttribute("msg", "用户名不存在或手机号错误");
             //跳转回重置界面
             return "/index/forget";
+        }
+    }
+
+    @RequestMapping("/my")
+    public String my(Users users, HttpServletRequest request, HttpSession session) {
+        //返回商品分类信息
+        request.setAttribute("typeList", iTypeService.getList());
+        request.setAttribute("flag", 4);
+
+        Users userLogin = (Users) session.getAttribute("user");
+        if (userLogin == null) {
+            //没有登录,跳转到登陆界面
+            request.setAttribute("msg", "请先登录");
+            return "forward:login?flag=-1"; //表示路径 /login?flag=-1
+        }
+
+        //因点击header.jsp的个人中心按钮,访问my路径,在my.jsp中点击提交按钮,访问的也是my路径
+        //问题:如何区分?
+        //判断是否携带了user数据,如果携带了数据,说明是个人中心页面提交修改数据操作,否则,说明是跳转个人中心页面操作
+        if (Objects.isNull(users) || Objects.isNull(users.getId())) {
+            return "/index/my";
+        }
+        //获取登录用户的所有信息
+        Users user = iUserService.get(users.getId());
+        //判断用户id是否存在
+        if (user != null) {
+            //修改对应用户的收货人姓名,电话和地址
+            iUserService.updateUserByid(user.getId(), users.getUsername(), users.getPhone(), users.getAddress());
+            request.setAttribute("msg", "收货信息修改成功");
+            //同步用户信息
+            user.setName(users.getName());
+            user.setPhone(users.getPhone());
+            user.setAddress(users.getAddress());
+            session.setAttribute("user", user);
+
+            //修改用户密码
+            //修改成功后,需返回登录界面重新登录
+            //页面输入的原密码和数据库中密码一致时,才能修改密码
+            if (users.getPassword() != null && !users.getPassword().trim().isEmpty()
+                && SafeUtil.encode(users.getPassword()).equals(user.getPassword())) {
+                if (users.getPasswordNew() != null && !users.getPasswordNew().trim().isEmpty()){
+                    //修改新密码
+                    iUserService.updatePassWordById(user.getId(), users.getPasswordNew().trim());
+                    request.setAttribute("msg", "密码修改成功");
+                    //消除登录状态
+                    session.setAttribute("user", null);
+                    //跳转到登录页面
+                    return "redirect:login?flag=-1"; //表示路径 /login?flag=-1
+                }else {
+                    request.setAttribute("msg", "新密码不可为空");
+                    return "/index/my";
+                }
+            }else if (!users.getPassword().trim().isEmpty()
+                && !SafeUtil.encode(users.getPassword()).equals(user.getPassword())) {
+                request.setAttribute("msg", "原密码输入错误");
+                return "/index/my";
+            }
+            return "/index/my";
+        }else {
+            request.setAttribute("msg", "系统繁忙,请稍后再试");
+            return "/index/my"; //表示路径 /index/my.jsp
         }
     }
 }

@@ -22,4 +22,13 @@ public interface UserDao {
 
     @Update("UPDATE users SET PASSWORD=#{passWord} WHERE username=#{userName} AND phone=#{Phone}")
     public void updatePasswordByUserNameAndPhone(@Param("passWord") String passWord,@Param("userName") String userName,@Param("Phone") String Phone);
+
+    @Select("SELECT * FROM users WHERE id=#{id}")
+    public Users get(@Param("id") int id);
+
+    @Update("UPDATE users SET name=#{name},phone=#{phone},address=#{address} WHERE id=#{id}")
+    public void updateUserByid(@Param("id") int id,@Param("name") String name,@Param("phone") String phone,@Param("address") String address);
+
+    @Update("UPDATE users SET password=#{newPassWord} WHERE id=#{id}")
+    public void updatePassWordById(@Param("id") int id,@Param("newPassWord") String newPassWord);
 }
