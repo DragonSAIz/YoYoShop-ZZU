@@ -24,4 +24,12 @@ public interface IUserService {
      * @return
      */
     public Users checkUser(String userName, String passWord);
+
+    /**
+     * 检查用户名和手机号
+     * @param userName
+     * @param Phone
+     * @return
+     */
+    public Users check(String userName, String Phone);
 }

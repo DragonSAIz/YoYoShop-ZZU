@@ -15,4 +15,7 @@ public interface UserDao {
 
     @Select("SELECT * FROM users WHERE username=#{userName} AND PASSWORD=#{passWord}")
     public Users checkUser(@Param("userName") String userName, @Param("passWord") String passWord);
+
+    @Select("SELECT * FROM users WHERE username=#{userName} AND phone=#{Phone}")
+    public Users check(@Param("userName") String userName, @Param("Phone") String Phone);
 }

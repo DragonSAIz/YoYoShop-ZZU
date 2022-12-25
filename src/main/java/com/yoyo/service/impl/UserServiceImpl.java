@@ -33,4 +33,9 @@ public class UserServiceImpl implements IUserService {
         //调用dao
         return userDao.checkUser(userName, SafeUtil.encode(passWord));
     }
+
+    @Override public Users check(String userName, String Phone) {
+        //调用dao
+        return userDao.check(userName, Phone);
+    }
 }

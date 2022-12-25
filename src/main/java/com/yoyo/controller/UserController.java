@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/index")
@@ -103,5 +104,44 @@ public class UserController {
         session.setAttribute("user", null);
         //跳转到登录页面
         return "redirect:login?flag=-1";
+    }
+
+    @RequestMapping("/toforget")
+    public String toForgrt(HttpServletRequest request) {
+        //返回商品分类信息
+        request.setAttribute("typeList", iTypeService.getList());
+        //跳转到重置密码界面
+        return "/index/forget";
+    }
+
+    @RequestMapping("/forget")
+    public String forget(HttpServletRequest request, Users users) {
+        //返回商品分类信息
+        request.setAttribute("typeList", iTypeService.getList());
+
+        //判断页面输入的用户名和手机号是否为空,如果为空,不能重置
+        if (users.getUsername() == null || users.getUsername().trim().isEmpty()) {
+            //返回给页面错误提示信息
+            request.setAttribute("msg", "用户名不能为空");
+            return "/index/forget";
+        }
+        if (users.getPhone() == null || users.getPhone().trim().isEmpty() || !Pattern.matches("^1[3-9]\\d{9}$",users.getPhone())) {
+            //返回给页面错误提示信息
+            request.setAttribute("msg", "手机号不合法");
+            return "/index/forget";
+        }
+
+        //重置密码
+        Users user = iUserService.check(users.getUsername().trim(), users.getPhone().trim());
+        if (user != null) {
+            //查询到用户信息,表示重置成功
+            //跳转到登录界面
+            return "redirect:login?flag=-1";
+        }else {
+            //未查询到用户信息,返回错误提示信息给页面
+            request.setAttribute("msg", "用户名或手机号错误");
+            //跳转回重置界面
+            return "/index/forget";
+        }
     }
 }

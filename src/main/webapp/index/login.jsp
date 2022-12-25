@@ -36,7 +36,7 @@
 					</div>
 					<div class="register-but text-center">
 						<input type="submit" value="登录"><br><br>
-						<a href="forget.jsp">忘记密码?</a>
+						<a href="toforget">忘记密码?</a>
 					   <div class="clearfix"> </div>
 					</div>
 				</form>
