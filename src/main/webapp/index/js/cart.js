@@ -10,7 +10,7 @@ function buy(goodid){
 			});
 		}else if(data=="login"){
             layer.msg("请登录后加入购物车!", {time:1200}, function(){
-                location.href="login.jsp";
+                location.href="login?flag=-1";
             });
 		}else if(data=="empty"){
             layer.msg("库存不足!", {time:1000}, function(){
