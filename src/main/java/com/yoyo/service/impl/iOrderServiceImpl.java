@@ -37,4 +37,26 @@ public class iOrderServiceImpl implements IOrderService {
         return null;
     }
 
+    @Override public Orders addOrderItem(Orders orders, Goods goods) {
+        List<Items> itemsList = orders.getItemList();
+        itemsList = itemsList==null ? new ArrayList<Items>() : itemsList;
+        boolean noThis = true; //true:商品不存在购物车中;false:在购物车中
+        for (Items items:itemsList) {
+            if (items.getGoodId() == goods.getId()) {
+                //原数量加一
+                items.setAmount(items.getAmount()+1);
+                items.setTotal(items.getPrice() * items.getAmount());
+                noThis = false;
+            }
+        }
+        if (noThis == true) {
+            itemsList.add(addItems(goods));
+        }
+
+        orders.setAmount(orders.getAmount() + 1);
+        orders.setTotal(orders.getTotal() + goods.getPrice());
+
+        return orders;
+    }
+
 }

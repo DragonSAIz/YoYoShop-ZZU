@@ -57,8 +57,16 @@ public class GoodsController {
             session.setAttribute("order", iOrderService.add(goods));
         }else {
             //购物车中已有商品,需在原数据基础上累计添加到购物车
+            session.setAttribute("order", iOrderService.addOrderItem(order, goods));
         }
 
         return "ok";
+    }
+
+    @RequestMapping("/cart")
+    public String cart (HttpServletRequest request) {
+        request.setAttribute("typelist", iTypeService.getList());
+
+        return "/index/cart";
     }
 }

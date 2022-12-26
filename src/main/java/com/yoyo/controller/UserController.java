@@ -110,6 +110,7 @@ public class UserController {
     public String logout(HttpSession session) {
         //消除登录状态
         session.setAttribute("user", null);
+        session.removeAttribute("order");
         //跳转到登录页面
         return "redirect:login?flag=-1";
     }
