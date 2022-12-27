@@ -67,7 +67,7 @@ public class GoodServiceImpl implements IGoodService {
     }
 
     @Override public long getTotalSizeByName(String name) {
-        return 0;
+        return goodDao.getTotalSizeByName(name);
     }
 
     @Override public List<Goods> getList(Integer typeid, int page, int size) {
