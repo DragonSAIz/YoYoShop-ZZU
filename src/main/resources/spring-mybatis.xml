@@ -50,4 +50,37 @@
 	<!-- 使用注解定义事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 
+
+	<!--shiro的校验配置-->
+	<bean id="realm" class="com.yoyo.realm.MyRealm"></bean>
+	<!--安全管理器-->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="realm"></property>
+	</bean>
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager"></property>
+		<!--没有登录默认跳转的页面-->
+		<property name="loginUrl" value="/admin.jsp"></property>
+		<!--配置shiro拦截规则-->
+		<property name="filterChainDefinitions">
+			<value>
+				<!--以下资源shiro不生效-->
+				/index.jsp = anon
+				/admin.jsp = anon
+				/index/** = anon
+				/picture/** = anon
+				/admin/css/** = anon
+				/admin/img/** = anon
+				/admin/js/** = anon
+				/admin/layui/** = anon
+				/admin/login.jsp = anon
+				/login = anon
+				/logout = anon
+				<!--设置访问项目中的任何资源都需要登录才能访问,如果没有登录,自动跳转到loginUrl设置的界面-->
+				/** = authc
+			</value>
+		</property>
+	</bean>
+
+
 </beans>

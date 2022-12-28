@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>后台管理</title>
-<link rel="stylesheet" href="css/bootstrap.css"/> 
+<link rel="stylesheet" href="/admin/css/bootstrap.css"/>
 </head>
 <body>
 <div class="container-fluid">

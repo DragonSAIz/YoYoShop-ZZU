@@ -3,6 +3,7 @@ package com.yoyo.dao;
 import com.yoyo.entity.Goods;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -28,4 +29,7 @@ public interface GoodDao {
 
     @Select("SELECT * FROM goods WHERE NAME LIKE concat('%',#{name},'%') ORDER BY id DESC LIMIT #{page},#{size}")
     public List<Goods> getListByName(@Param("name") String name,@Param("page") int page,@Param("size") int size);
+
+    @Update("UPDATE goods SET stock=#{stock} WHERE id=#{goodid}")
+    public void updateStockById(@Param("stock") int stock,@Param("goodid") int goodid);
 }

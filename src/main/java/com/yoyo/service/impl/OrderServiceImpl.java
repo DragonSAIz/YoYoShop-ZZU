@@ -1,10 +1,12 @@
 package com.yoyo.service.impl;
 
+import com.yoyo.dao.GoodDao;
 import com.yoyo.dao.ItemDao;
 import com.yoyo.dao.OrderDao;
 import com.yoyo.entity.Goods;
 import com.yoyo.entity.Items;
 import com.yoyo.entity.Orders;
+import com.yoyo.service.IGoodService;
 import com.yoyo.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,12 @@ public class OrderServiceImpl implements IOrderService {
 
     @Autowired
     private ItemDao itemDao;
+
+    @Autowired
+    private GoodDao goodDao;
+
+    @Autowired
+    private IGoodService iGoodService;
 
     @Override public Orders add(Goods goods) {
 
@@ -177,6 +185,34 @@ public class OrderServiceImpl implements IOrderService {
             //更新数据库数据
             orderDao.updateOrderById(order);
             //支付成功之后，修改goods表中对应的商品的库存
+            //获取goods表中的对应库存 - 购买的商品的数量 = 最新的库存 -> 更新到数据库
+            //根据orderId查询item表,将item表中数据查出来
+            List<Items> itemList = itemDao.getItemsByOrderId(order.getId());
+            for (Items items:itemList) {
+                //获取购买商品的数量
+                Integer amount = items.getAmount();
+                //获取购买商品的id,然后根据商品的id,获取商品信息
+                Goods goods = goodDao.get(items.getGoodId());
+                //计算最新库存    goods.getStock() - amount
+                //更新数据库
+                goodDao.updateStockById(goods.getStock() - amount, goods.getId());
+            }
+
         }
+    }
+
+    @Override public List<Orders> getListByUserId(int userId) {
+        //调用dao
+        return orderDao.getListByUserId(userId);
+    }
+
+    @Override public List<Items> getItemListByOrderId(int orderId) {
+        List<Items> itemList = itemDao.getItemsByOrderId(orderId);
+        //根据items表中的goodid,查询goods表数据
+        for (Items items:itemList) {
+            Goods goods = iGoodService.get(items.getGoodId());
+            items.setGood(goods);
+        }
+        return itemList;
     }
 }

@@ -4,6 +4,8 @@ import com.yoyo.entity.Goods;
 import com.yoyo.entity.Items;
 import com.yoyo.entity.Orders;
 
+import java.util.List;
+
 public interface IOrderService {
 
     /**
@@ -55,4 +57,18 @@ public interface IOrderService {
      * @param orders
      */
     public void pay(Orders orders);
+
+    /**
+     * 根据用户的id查询对应订单信息
+     * @param userId
+     * @return
+     */
+    public List<Orders> getListByUserId(int userId);
+
+    /**
+     * 根据orderId查询items表数据
+     * @param orderId
+     * @return
+     */
+    public List<Items> getItemListByOrderId(int orderId);
 }

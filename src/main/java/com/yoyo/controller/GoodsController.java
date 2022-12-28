@@ -197,4 +197,29 @@ public class GoodsController {
 
         return "/index/payok";
     }
+
+    @RequestMapping("/order")
+    public String order(HttpServletRequest request, HttpSession session) {
+        //返回页面分类信息及选项选中的标识
+        request.setAttribute("flag", 3);
+        request.setAttribute("typelist", iTypeService.getList());
+        //严谨性判断,判断用户是否登录
+        Users userLogin = (Users) session.getAttribute("user");
+        if (userLogin == null) {
+            request.setAttribute("msg", "请登陆后查看订单");
+            request.setAttribute("flag", 6);
+            return "/index/login";
+        }
+        //查询对应用户的订单信息,展示到页面
+        List<Orders> orderList = iOrderService.getListByUserId(userLogin.getId());
+        if (orderList != null && !orderList.isEmpty()) {
+            for (Orders orders:orderList) {
+                //根据orderId查询items表的数据
+                List<Items> itemList = iOrderService.getItemListByOrderId(orders.getId());
+                orders.setItemList(itemList);
+            }
+        }
+        request.setAttribute("orderList", orderList);
+        return "/index/order";
+    }
 }
