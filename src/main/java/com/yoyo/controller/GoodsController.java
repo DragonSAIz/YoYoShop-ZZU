@@ -51,7 +51,6 @@ public class GoodsController {
         Goods goods = iGoodService.get(goodid);
         //判断商品的库存是否存在,存在则可以加入购物车;不存在则不可加入购物车
         if (goods.getStock() <= 0) {
-
             return "empty";
         }
         //库存存在

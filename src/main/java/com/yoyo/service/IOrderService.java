@@ -13,13 +13,6 @@ public interface IOrderService {
     public Orders add(Goods goods);
 
     /**
-     * 将商品Goods添加进Items
-     * @param goods
-     * @return
-     */
-    public Items addItems(Goods goods);
-
-    /**
      * 将商品数据,储存到已有商品的购物车数据中
      * @param orders
      * @param goods

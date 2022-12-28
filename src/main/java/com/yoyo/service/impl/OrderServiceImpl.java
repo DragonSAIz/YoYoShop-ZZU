@@ -38,14 +38,19 @@ public class OrderServiceImpl implements IOrderService {
         return orders;
     }
 
-    @Override public Items addItems(Goods goods) {
+    /**
+     * 将商品Goods添加到Items
+     * @param goods
+     * @return
+     */
+    private Items addItems(Goods goods) {
         Items items = new Items();
         items.setGoodId(goods.getId());
         items.setAmount(1);
         items.setPrice(goods.getPrice());
         items.setTotal(goods.getPrice());
         items.setGood(goods);
-        return null;
+        return items;
     }
 
     @Override public Orders addOrderItem(Orders orders, Goods goods) {
