@@ -4,8 +4,8 @@
 <head>
 <title>商品列表</title>
 <meta charset="utf-8"/>
-<link rel="stylesheet" href="css/bootstrap.css"/>
-	<link rel="stylesheet" href="layui/css/layui.css"  media="all">
+<link rel="stylesheet" href="/admin/css/bootstrap.css"/>
+	<link rel="stylesheet" href="/admin/layui/css/layui.css"  media="all">
 </head>
 <body>
 <div class="container-fluid">
@@ -106,6 +106,6 @@ $(function(){
 	});
 });
 </script>
-<script src="layui/layui.js" charset="utf-8"></script>
+<script src="/admin/layui/layui.js" charset="utf-8"></script>
 </body>
 </html>

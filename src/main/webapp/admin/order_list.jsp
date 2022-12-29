@@ -5,8 +5,8 @@
 <html>
 <head>
 <title>订单列表</title>
-<link rel="stylesheet" href="css/bootstrap.css"/>
-	<link rel="stylesheet" href="layui/css/layui.css"  media="all">
+<link rel="stylesheet" href="/admin/css/bootstrap.css"/>
+	<link rel="stylesheet" href="/admin/layui/css/layui.css"  media="all">
 </head>
 <body>
 <div class="container-fluid">
@@ -89,6 +89,6 @@
 
 <br>${pageTool}<br>
 </div>
-<script src="layui/layui.js" charset="utf-8"></script>
+<script src="/admin/layui/layui.js" charset="utf-8"></script>
 </body>
 </html>

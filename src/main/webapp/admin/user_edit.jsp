@@ -4,8 +4,8 @@
 <head>
 <title>客户修改</title>
 <meta charset="utf-8"/>
-<link rel="stylesheet" href="css/bootstrap.css"/>
-	<link rel="stylesheet" href="layui/css/layui.css"  media="all">
+<link rel="stylesheet" href="/admin/css/bootstrap.css"/>
+	<link rel="stylesheet" href="/admin/layui/css/layui.css"  media="all">
 </head>
 <body>
 <div class="container-fluid">
@@ -43,6 +43,6 @@
 	<span style="color:red;">${msg}</span>
 	
 </div>
-<script src="layui/layui.js" charset="utf-8"></script>
+<script src="/admin/layui/layui.js" charset="utf-8"></script>
 </body>
 </html>

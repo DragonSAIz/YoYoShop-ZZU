@@ -32,8 +32,9 @@ public class MyRealm extends AuthorizingRealm {
         throws AuthenticationException {
         //shiro要求程序员自己实现
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+        String username = token.getUsername();
         //判断用户是否存在,根据用户名查询数据库即可
-        Admins admin = iAdminService.getAdminByUserName(token.getUsername());
+        Admins admin = iAdminService.getAdminByUserName(username);
         if (admin == null) {
             return null;//告诉shiro用户不存在数据库中,shiro会抛出UnknownAccountException异常
         }

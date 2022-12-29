@@ -79,7 +79,8 @@
 
 <div class="login">
 	<h1>后台登录</h1>
-	<form action="/login">
+	<c:if test="${msg!=null}"><div class="alert alert-danger text-center">${msg}</div></c:if>
+	<form action="/login" method="post">
 		<input type="text" name="username" placeholder="用户名" value="1" required="required" />
 		<input type="password" name="password" placeholder="密码" value="1" required="required" />
 		<button type="submit" class="btn btn-primary btn-block btn-large">登录</button>

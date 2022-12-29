@@ -31,15 +31,6 @@
 	</bean>
 
 
-	<!-- 配置拦截器 -->
-	<mvc:interceptors>
-		<mvc:interceptor><!-- 配置登陆拦截器 -->
-			<mvc:mapping path="/admin/**"/>
-			<bean class="com.yoyo.controller.AdminInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>
-
-
 	<!--静态资源不拦截 -->
 	<mvc:resources mapping="/picture/**" location="/picture/" />
 	<mvc:resources mapping="/index/css/**" location="/index/css/" />
